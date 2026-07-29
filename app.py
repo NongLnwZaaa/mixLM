@@ -7,21 +7,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("❤️ Heart Disease Prediction")
-
+st.title("Heart Disease Prediction")
 st.markdown("""
 ## Machine Learning Project
-
-โปรเจกต์นี้ใช้ Machine Learning วิเคราะห์โรคหัวใจ
+Machine Learning Model Demonstration
 
 ### Algorithms
-
-- K-Nearest Neighbor
+- K-Nearest Neighbor (KNN)
 - Decision Tree
-- SVM
-- K-Means
+- Support Vector Machine (SVM)
+- K-Means Clustering
 - Logistic Regression
 - Random Forest
-
-เลือกเมนูทางด้านซ้ายเพื่อเริ่มใช้งาน
 """)
