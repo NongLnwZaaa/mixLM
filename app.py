@@ -14,16 +14,14 @@ st.markdown("---")
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    # คุณสามารถเปลี่ยนเป็นรูปของคุณได้โดยใส่ลิงก์รูป หรือ path ไฟล์รูป
-    st.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=180)
+    st.image("https://scontent.fbkk31-1.fna.fbcdn.net/v/t39.30808-6/397864360_2110730222603303_7087100876165517819_n.jpg?stp=dst-jpg_tt6&cstp=mx959x960&ctp=s959x960&_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=7tO5552GG-cQ7kNvwHbP5pv&_nc_oc=AdoRQAu1RwBVric8QeTlCLvQsjg7A3y0t3YZW-e5CrpQxjJQgZnyAgt7y7Stw1Vil5wWu7VREqjjh-09loXH-s5_&_nc_zt=23&_nc_ht=scontent.fbkk31-1.fna&_nc_gid=jh6YWjQ-kWUKjg_3jaFbEg&_nc_ss=7b2a8&oh=00_AQA-W8--ixzIgSa0va_Sok49FeiRsM71ATJYceBVyJWbhg&oe=6A6F9855", width=180)
 
 with col2:
     st.subheader("ชื่อผู้พัฒนา")
-    # ✏️ กรอกชื่อ-นามสกุล และรหัสนักศึกษาของคุณตรงนี้ได้เลยครับ
     st.markdown("นาย กรภัทร์ ถิ่นผาแดง")
     st.write("รหัสนักศึกษา: 664245016")
     st.write("สาขาวิชา: วิทยาการคอมพิวเตอรร์")
-    st.write("มหาวิทยาลัย: ราชภัฏเนครปฐม")
+    st.write("มหาวิทยาลัย: ราชภัฏนครปฐม")
 
 st.divider()
 
