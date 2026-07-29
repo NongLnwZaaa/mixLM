@@ -2,24 +2,24 @@ import streamlit as st
 import pandas as pd
 from utils.loader import load_data
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="สำรวจชุดข้อมูล", page_icon="📁", layout="wide")
 df = load_data()
 
-st.title("Dataset Explorer")
-st.markdown("**Heart3.csv**")
+st.title("📁 สำรวจชุดข้อมูล (Dataset Explorer)")
+st.markdown("**ไฟล์ข้อมูลหลัก: Heart3.csv**")
 st.divider()
 
-# Summary Cards
+# การ์ดสรุปข้อมูล
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Rows", len(df))
-c2.metric("Columns", len(df.columns))
-c3.metric("Missing Values", int(df.isnull().sum().sum()))
-c4.metric("Duplicate", int(df.duplicated().sum()))
+c1.metric("จำนวนรายการ (Rows)", len(df))
+c2.metric("จำนวนคอลัมน์ (Columns)", len(df.columns))
+c3.metric("ค่าที่สูญหาย (Missing Values)", int(df.isnull().sum().sum()))
+c4.metric("ข้อมูลซ้ำ (Duplicates)", int(df.duplicated().sum()))
 st.divider()
 
-# Search
-st.subheader("Search")
-keyword = st.text_input("Enter keyword to search dataset:")
+# ค้นหาข้อมูล
+st.subheader("🔍 ค้นหาข้อมูล")
+keyword = st.text_input("พิมพ์คำค้นหาที่ต้องการในชุดข้อมูล:")
 if keyword:
     result = df[
         df.astype(str)
@@ -31,40 +31,40 @@ else:
     st.dataframe(df, use_container_width=True)
 st.divider()
 
-# Column Filter
-st.subheader("Select Columns")
-cols = st.multiselect("Columns", df.columns, default=list(df.columns))
+# เลือกแสดงคอลัมน์
+st.subheader("📌 เลือกคอลัมน์ที่ต้องการดู")
+cols = st.multiselect("คอลัมน์", df.columns, default=list(df.columns))
 st.dataframe(df[cols], use_container_width=True)
 st.divider()
 
-# Data Types
-st.subheader("Data Types")
+# ประเภทข้อมูล
+st.subheader("🏷️ ชนิดข้อมูลของแต่ละคอลัมน์ (Data Types)")
 dtype = pd.DataFrame({
-    "Column": df.columns,
-    "Type": df.dtypes.astype(str)
+    "ชื่อคอลัมน์": df.columns,
+    "ชนิดข้อมูล": df.dtypes.astype(str)
 })
 st.dataframe(dtype, hide_index=True, use_container_width=True)
 st.divider()
 
-# Missing Values
-st.subheader("Missing Values")
+# สรุปค่าสูญหาย
+st.subheader("⚠️ ตรวจสอบค่าที่สูญหาย (Missing Values)")
 missing = pd.DataFrame({
-    "Column": df.columns,
-    "Missing": df.isnull().sum(),
-    "Percent": round(df.isnull().mean() * 100, 2)
+    "ชื่อคอลัมน์": df.columns,
+    "จำนวนที่สูญหาย": df.isnull().sum(),
+    "คิดเป็นร้อยละ (%)": round(df.isnull().mean() * 100, 2)
 })
 st.dataframe(missing, hide_index=True, use_container_width=True)
 st.divider()
 
-# Statistics
-st.subheader("Descriptive Statistics")
+# สถิติเชิงพรรณนา
+st.subheader("📈 สถิติเชิงพรรณนา (Descriptive Statistics)")
 st.dataframe(df.describe(include="all"), use_container_width=True)
 st.divider()
 
-# Download
+# ดาวน์โหลด
 csv = df.to_csv(index=False).encode("utf-8-sig")
 st.download_button(
-    "Download CSV",
+    "📥 ดาวน์โหลดไฟล์ CSV",
     csv,
     "Heart3.csv",
     "text/csv"

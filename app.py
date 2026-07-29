@@ -1,22 +1,22 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Heart Disease Prediction",
+    page_title="ระบบทำนายโรคหัวใจ",
     page_icon="❤️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-st.title("Heart Disease Prediction")
+st.title("❤️ ระบบทำนายความเสี่ยงโรคหัวใจ")
 st.markdown("""
-## Machine Learning Project
-Machine Learning Model Demonstration
+## โปรเจกต์เรียนรู้ Machine Learning
+ระบบสาธิตการทำงานของโมเดล Machine Learning สำหรับการประเมินความเสี่ยงโรคหัวใจ
 
-### Algorithms
+### อัลกอริทึมที่ใช้ในระบบ
 - K-Nearest Neighbor (KNN)
-- Decision Tree
+- ต้นไม้ตัดสินใจ (Decision Tree)
 - Support Vector Machine (SVM)
-- K-Means Clustering
-- Logistic Regression
-- Random Forest
+- การแบ่งกลุ่มด้วย K-Means (K-Means Clustering)
+- การถดถอยโลจิสติก (Logistic Regression)
+- ป่าสุ่ม (Random Forest)
 """)
