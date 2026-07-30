@@ -12,10 +12,12 @@ st.title("🌳 ต้นไม้ตัดสินใจ (Decision Tree Model)"
 df = load_data()
 X_train, X_test, y_train, y_test, preprocessor = preprocess(df)
 
+# Sidebar
 st.sidebar.header("⚙️ ปรับแต่งพารามิเตอร์")
 criterion = st.sidebar.selectbox("เกณฑ์การแยกข้อมูล (Criterion)", ["gini", "entropy", "log_loss"])
 max_depth = st.sidebar.slider("ความลึกสูงสุดของต้นไม้ (Max Depth)", 1, 20, 5)
 
+# Train Model
 model = DecisionTreeClassifier(criterion=criterion, max_depth=max_depth, random_state=42)
 model.fit(X_train, y_train)
 pred = model.predict(X_test)
@@ -32,3 +34,42 @@ with right:
     st.subheader("📋 รายงานการประเมินโมเดล (Classification Report)")
     report = classification_report(y_test, pred, output_dict=True)
     st.dataframe(pd.DataFrame(report).transpose(), use_container_width=True)
+
+st.divider()
+
+# ส่วนทำนายคนไข้ใหม่
+st.subheader("🩺 ทำนายผลความเสี่ยงคนไข้ใหม่ (Decision Tree)")
+col_a, col_b = st.columns(2)
+with col_a:
+    age = st.number_input("อายุ (Age)", 20, 100, 40)
+    sex = st.selectbox("เพศ (Sex)", [1, 0], format_func=lambda x: "ชาย (1)" if x == 1 else "หญิง (0)")
+    pain = st.selectbox("ประเภทอาการปวดหน้าอก (ChestPainType)", [1, 2, 3, 4], format_func=lambda x: f"แบบที่ {x}")
+    bp = st.number_input("ความดันโลหิตขณะพัก (RestingBP)", 50, 250, 120)
+    chol = st.number_input("คลอเรสเตอรอล (Cholesterol)", 0, 700, 200)
+    fast = st.selectbox("น้ำตาลในเลือดหลังอดอาหาร > 120 mg/dl (FastingBS)", [0, 1], format_func=lambda x: "ใช่ (1)" if x == 1 else "ไม่ใช่ (0)")
+
+with col_b:
+    ecg = st.selectbox("ผลคลื่นไฟฟ้าหัวใจ (RestingECG)", [0, 1, 2, 3])
+    hr = st.number_input("อัตราการเต้นหัวใจสูงสุด (MaxHR)", 50, 220, 150)
+    angina = st.selectbox("อาการเจ็บหน้าอกขณะออกกำลังกาย (ExerciseAngina)", [0, 1], format_func=lambda x: "มีอาการ (1)" if x == 1 else "ไม่มีอาการ (0)")
+    oldpeak = st.number_input("ค่า Oldpeak", 0.0, 10.0, 1.0)
+    slope = st.selectbox("ความชัน ST_Slope", [1, 2, 3])
+
+if st.button("🩺 ทำนายความเสี่ยงโรคหัวใจ"):
+    sample = pd.DataFrame({
+        "Age": [age], "Sex": [sex], "ChestPainType": [pain], "RestingBP": [bp],
+        "Cholesterol": [chol], "FastingBS": [fast], "RestingECG": [ecg],
+        "MaxHR": [hr], "ExerciseAngina": [angina], "Oldpeak": [oldpeak], "ST_Slope": [slope]
+    })
+    
+    sample_scaled = preprocessor.transform(sample)
+    result = model.predict(sample_scaled)[0]
+    prob = model.predict_proba(sample_scaled)[0]
+    
+    if result == 1:
+        st.error("🚨 ตรวจพบความเสี่ยงเป็นโรคหัวใจ (Heart Disease Detected)")
+    else:
+        st.success("✅ ผลตรวจอยู่ในเกณฑ์ปกติ (Normal)")
+        
+    st.write(f"โอกาสปกติ: **{prob[0]*100:.2f}%**")
+    st.write(f"โอกาสเสี่ยงเป็นโรคหัวใจ: **{prob[1]*100:.2f}%**")
